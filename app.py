@@ -18,12 +18,12 @@ itm = Item()
 
 @app.route("/")
 def index():
-    if session['login'] == True: return redirect(url_for("dashboard"))
+    if session.get('login'): return redirect(url_for("dashboard"))
     return render_template("index.html")
 
 @app.route("/dashboard")
 def dashboard():
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')): return redirect(url_for("login"))
     user.refresh()
     return render_template("collections/user_collections.html",user=session['user'])
 
@@ -41,7 +41,7 @@ def signup():
 
 @app.route("/users/login", methods=['GET', 'POST'])
 def login():
-    if session['login'] == True: return redirect(url_for("dashboard"))
+    if session.get('login'):  return redirect(url_for("dashboard"))
     if request.method == 'POST':
         return user.login(request)
     else:
@@ -49,12 +49,12 @@ def login():
 
 @app.route("/users/logout")
 def logout():
-    session['login'] = False
+    session.pop('login', None)
     return redirect(url_for("login"))
 
 @app.route("/users/update", methods=['GET', 'POST'])
 def update_user():
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     if request.method == 'POST':
         return user.update(request)
     else:
@@ -69,7 +69,7 @@ def collection():
 
 @app.route("/collections/add", methods=['GET', 'POST'])
 def add_collection():
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     if request.method == 'POST':
         return coll.add(request)
     else:
@@ -84,7 +84,7 @@ def edit_collection(id):
 
 @app.route("/collection/delete/<int:collection>")
 def delete_collection(collection):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     return coll.delete(collection)
 
 # --------------------------------------------------------
@@ -96,7 +96,7 @@ def card():
 
 @app.route("/collections/<int:collection>/cards/add", methods=['GET', 'POST'])
 def add_card(collection):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     if request.method == 'POST':
         return crds.add(request)
     else:
@@ -114,13 +114,13 @@ def view_card(id):
 
 @app.route("/collection/<int:collection>/card/delete/<int:card>")
 def delete_card(collection,card):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     return crds.delete(collection,card)
 
 
 @app.route("/collections/<int:collection>/cards/<int:card>/move", methods=['GET', 'POST'])
 def move_card(collection, card):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     if request.method == 'POST':
         return crds.move(request)
     else:
@@ -132,7 +132,7 @@ def move_card(collection, card):
 
 @app.route("/collections/<int:collection>/cards/<int:card>/items/add", methods=['GET', 'POST'])
 def add_item(collection, card):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     if request.method == 'POST':
         return itm.add(request)
     else:
@@ -140,12 +140,12 @@ def add_item(collection, card):
 
 @app.route("/collection/<int:collection>/card/<int:card>/items/delete/<int:item>")
 def delete_item(collection,card,item):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     return itm.delete(collection,card,item)
 
 @app.route("/collection/<int:collection>/card/<int:card>/items/undo/<int:item>")
 def undo_item(collection,card,item):
-    if session['login'] == False: return redirect(url_for("login"))
+    if not(session.get('login')):  return redirect(url_for("login"))
     return itm.undo(collection,card,item)
 
 if __name__ == "__main__":

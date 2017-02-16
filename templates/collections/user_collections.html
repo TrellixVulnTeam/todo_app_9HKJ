@@ -27,8 +27,8 @@
 {% block collection %}
   <div class="row" style="width:5000px" >
     {% if session['collection']|length is equalto 0  %}
-      <div class="col-md-3 user_collection">
-        <a href="{{ url_for('add_collection') }}" class="btn btn-primary">Create a new Collection Now</a>
+      <div class="user_collection">
+        <a href="{{ url_for('add_collection') }}" class="btn btn-primary">Create a new Collection</a>
       </div>
     {% else %}
 

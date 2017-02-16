@@ -48,7 +48,6 @@ class User(Model):
             return redirect(url_for("dashboard"))
         return redirect(url_for("update_user"))
 
-
     def login(self, request):
         users = []
         email = request.form['email']
