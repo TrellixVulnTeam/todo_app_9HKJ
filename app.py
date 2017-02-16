@@ -67,7 +67,6 @@ def update_user():
 def collection():
     return "Available collections"
 
-
 @app.route("/collections/add", methods=['GET', 'POST'])
 def add_collection():
     if session['login'] == False: return redirect(url_for("login"))
@@ -83,14 +82,10 @@ def edit_collection(id):
     return "Edit collection %d" % id
 
 
-@app.route("/collection/view/<int:id>")
-def view_collection(id):
-    return "View collection %d" % id
-
-
-@app.route("/collection/delete/<int:id>")
-def delete_collection(id):
-    return "Delete collection %d" % id
+@app.route("/collection/delete/<int:collection>")
+def delete_collection(collection):
+    if session['login'] == False: return redirect(url_for("login"))
+    return coll.delete(collection)
 
 # --------------------------------------------------------
 #Definition of Card Class routes
@@ -117,32 +112,41 @@ def view_card(id):
     return "You are Viewing a card %d" % id
 
 
-@app.route("/cards/delete/<int:id>")
-def delete_card(id):
-    return "You are deleting a card %d" % id
-
-@app.route("/cards/move/<int:collection_id>/<int:card_id>")
-def move_card(collection_id, card_id):
-    return "You are Moving Card " + str(card_id) + " to Collection " + str(collection_id)
+@app.route("/collection/<int:collection>/card/delete/<int:card>")
+def delete_card(collection,card):
+    if session['login'] == False: return redirect(url_for("login"))
+    return crds.delete(collection,card)
 
 
-@app.route("/cards/item/<int:card_id>")
-def undo_card(card_id):
-    return "You have undone the changes for card %d" % card_id
-
-
+@app.route("/collections/<int:collection>/cards/<int:card>/move", methods=['GET', 'POST'])
+def move_card(collection, card):
+    if session['login'] == False: return redirect(url_for("login"))
+    if request.method == 'POST':
+        return crds.move(request)
+    else:
+        return render_template("cards/move.html",coll=collection, cad = card)
 
 # --------------------------------------------------------
 #Definition of Card Class routes
 #------------------------------------------------------
 
-@app.route("/collections/<int:collection>/cards/<int:card>/item/add", methods=['GET', 'POST'])
+@app.route("/collections/<int:collection>/cards/<int:card>/items/add", methods=['GET', 'POST'])
 def add_item(collection, card):
     if session['login'] == False: return redirect(url_for("login"))
     if request.method == 'POST':
         return itm.add(request)
     else:
         return render_template("items/add.html",coll=collection, cad = card)
+
+@app.route("/collection/<int:collection>/card/<int:card>/items/delete/<int:item>")
+def delete_item(collection,card,item):
+    if session['login'] == False: return redirect(url_for("login"))
+    return itm.delete(collection,card,item)
+
+@app.route("/collection/<int:collection>/card/<int:card>/items/undo/<int:item>")
+def undo_item(collection,card,item):
+    if session['login'] == False: return redirect(url_for("login"))
+    return itm.undo(collection,card,item)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -27,7 +27,7 @@
     {% block content %}{% endblock %}
 
     {% block bottomJS %}
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script> 
       <script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script> 
     {% endblock %}
   </body>
