@@ -1,1 +1,1 @@
-web: gunicorn flask_rest_service:app
+web: gunicorn todo_app.app --log-file -
