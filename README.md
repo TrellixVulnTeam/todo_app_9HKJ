@@ -8,14 +8,14 @@ Use these instructions as a guide to get getting this App up and running on your
 ##Prerequisites
 This app Requires:
 
-*Flask==0.12
-*Flask-RESTful==0.2.12
-*Jinja2==2.9.5
-*MarkupSafe==0.23
-*Werkzeug==0.9.6
-*aniso8601==0.82
-*pymongo==3.
-*six==1.10.0
++Flask==0.12
++Flask-RESTful==0.2.12
++Jinja2==2.9.5
++MarkupSafe==0.23
++Werkzeug==0.9.6
++aniso8601==0.82
++pymongo==3.
++six==1.10.0
 
 ##Deployment
 To deploy this application on a real server, you must make sure that, all the items outlined under the Prerequisites are installed and set. The server must be running python 3, and Mongo DB. 
