@@ -7,6 +7,7 @@ Use these instructions as a guide to get getting this App up and running on your
 
 #Prerequisites
 This app Requires:
+
 *Flask==0.12
 *Flask-RESTful==0.2.12
 *Jinja2==2.9.5
